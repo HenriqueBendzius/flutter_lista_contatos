@@ -1,0 +1,92 @@
+
+
+import 'package:contatoview/contato.dart';
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      home: ListaPage(),
+    );
+  }
+}
+
+class ListaPage extends StatelessWidget {
+  ListaPage({Key? key}) : super(key: key);
+
+  final List<Contato> contatos = [
+    Contato("João", "joao@gmail.com"),
+    Contato("Pedro", "pedro@gmail.com"),
+    Contato("Ricky", "ricky@gmail.com"),
+    Contato("Henrique", "Henrique@gmail.com"),
+    Contato("gui", "gui@gmail.com"),
+    Contato("Ana", "Ana@gmail.com"),
+    Contato("Jota", "jota@gmail.com"),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Lista de Contatos')),
+      body: ListView.builder(
+        itemCount: contatos.length,
+        itemBuilder: (BuildContext context, int index) {
+          return ListTile(
+            leading: CircleAvatar(
+              backgroundImage: AssetImage(contatos[index].email),
+            ),
+            title: Text(contatos[index].nome),
+            subtitle: Text(contatos[index].email),
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('Informações do Contato'),
+                    content: Text(
+                      'Nome: ${contatos[index].nome}\nEmail: ${contatos[index].email}',
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('Fechar'),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+}
+
+
+
+
+*******************************
+contato.dart
+
+class Contato{
+
+String nome;
+String email;
+
+Contato(this.nome , this.email);
+
+}
+
+
+
